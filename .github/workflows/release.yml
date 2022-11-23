@@ -18,21 +18,6 @@ jobs:
         with:
           RUSTTARGET: x86_64-unknown-linux-musl
           UPLOAD_MODE: none
-
-      - shell: bash
-        run: |
-           pwd
-           ls
-      - name: Upload artifact
-        uses: actions/upload-artifact@main
-        with:
-          name: Binary
-          path: |
-            ${{ steps.compile.outputs.BUILT_ARCHIVE }}
-      - name: Download artifact
-        uses: actions/download-artifact@main
-        with:
-          name: Binary
       - shell: bash
         run: |
           ls
