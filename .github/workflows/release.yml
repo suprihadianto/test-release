@@ -22,26 +22,12 @@ jobs:
       needs: release
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@master
-        - name: Compile
-          id: compile
-          uses: rust-build/rust-build.action@v1.4.0
+        - uses: actions/checkout@v2
+        - name: Build-musl Linux x86
+          uses: shogan/rust-musl-action@master
           with:
-            RUSTTARGET: x86_64-unknown-linux-musl
-            ARCHIVE_NAME: "${{ secrets.RELEASE_NAME }}-linux_amd64"
-            UPLOAD_MODE: none
-        - name: Build binaries
-          run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/build.sh"
-          env:
-            RELEASE_NAME: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
-        - name: Upload binary to release
-          uses: svenstaro/upload-release-action@2.3.0
-          with:
-            repo_token: ${{ secrets.GIT_TOKEN }}
-            file: ${{ github.workspace }}/${{ secrets.RELEASE_NAME }}-linux_amd64.zip
-            asset_name: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
-            tag:  ${{ secrets.RELEASE_NAME }}
-            overwrite: true
+            args: cargo build --target x86_64-unknown-linux-musl --release
+        
             
 
   windows:
