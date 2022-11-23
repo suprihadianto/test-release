@@ -6,30 +6,44 @@ on:
     tags:
       - test_release-v*.*.*
     
-
 jobs:
-  build:
-    name: Build
+  release:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@master
-      - name: Compile
-        id: compile
-        uses: rust-build/rust-build.action@v1.4.0
+
+      - name: Set env
+        run: echo "RELEASE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: Create a release
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          RUSTTARGET: x86_64-unknown-linux-musl
-          ARCHIVE_NAME: "${{ secrets.RELEASE_NAME }}-linux_amd64"
-          UPLOAD_MODE: none
-      - name: Build binaries
-        run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/build-linux.sh"
-        env:
-          RELEASE_NAME: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
-      - shell: bash
-        run: |
-          ls
-      - name: Publish release
-        run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/release-linux.sh"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-          RELEASE_NAME: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          automatic_release_tag: ${{ env.RELEASE_NAME }}
+          
+  linux:
+      needs: release
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - name: Compile
+          id: compile
+          uses: rust-build/rust-build.action@v1.4.0
+          with:
+            RUSTTARGET: x86_64-unknown-linux-musl
+            ARCHIVE_NAME: "${{ secrets.RELEASE_NAME }}-linux_amd64"
+            UPLOAD_MODE: none
+        - name: Build binaries
+          run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/build-linux.sh"
+          env:
+            RELEASE_NAME: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
+        - shell: bash
+          run: |
+            ls
+        - name: Publish release
+          run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/release-linux.sh"
+          env:
+            GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+            RELEASE_NAME: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
 
