@@ -19,8 +19,11 @@ jobs:
           RUSTTARGET: x86_64-unknown-linux-musl
           ARCHIVE_NAME: "${{ secrets.RELEASE_NAME }}-linux_amd64"
           UPLOAD_MODE: none
+      - name: Build binaries
+        run: /bin/bash -c "source $GITHUB_WORKSPACE/contrib/github-actions/build-linux.sh"
+        env:
+          RELEASE_NAME: "${{ secrets.RELEASE_NAME }}-linux_amd64.zip"
       - shell: bash
         run: |
-          cp "output/${{ secrets.RELEASE_NAME }}-linux_amd64.zip ."
           ls
 
