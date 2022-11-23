@@ -1,7 +1,11 @@
 #!/bin/bash
 
 function build() {
+  pwd
+  
   cd "${GITHUB_WORKSPACE}" || exit
+  
+  pwd
 
   mkdir "${GITHUB_WORKSPACE}/bin"
 
