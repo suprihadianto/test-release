@@ -17,9 +17,10 @@ jobs:
         uses: rust-build/rust-build.action@v1.4.0
         with:
           RUSTTARGET: x86_64-unknown-linux-musl
-          ARCHIVE_NAME: "${{ secrets.RELEASE_NAME }}-amd64.zip"
+          ARCHIVE_NAME: "${{ secrets.RELEASE_NAME }}-linux_amd64"
           UPLOAD_MODE: none
       - shell: bash
         run: |
-          ls output
+          cp "output/${{ secrets.RELEASE_NAME }}-linux_amd64.zip ."
+          ls
 
