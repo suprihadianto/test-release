@@ -21,4 +21,5 @@ jobs:
       - shell: bash
         run: |
           ls output
+          cp output/test-release_null_x86_64-unknown-linux-musl.zip .
 
