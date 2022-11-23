@@ -29,9 +29,10 @@ jobs:
           name: Binary
           path: |
             ${{ steps.compile.outputs.BUILT_ARCHIVE }}
-            
-      - name: Publish release
-        run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/release-linux.sh"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-          RELEASE_NAME: ${{ secrets.RELEASE_NAME }}
+      - name: Download artifact
+        uses: actions/download-artifact@main
+        with:
+          name: Binary
+      - shell: bash
+        run: |
+          ls
