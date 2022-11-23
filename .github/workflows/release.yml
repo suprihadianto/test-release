@@ -27,6 +27,15 @@ jobs:
           uses: shogan/rust-musl-action@master
           with:
             args: cargo build --target x86_64-unknown-linux-musl --release
+            
+        - name: Upload binary to release
+          uses: svenstaro/upload-release-action@2.3.0
+          with:
+            repo_token: ${{ secrets.GIT_TOKEN }}
+            file: ${{ github.workspace }}/target/x86_64-unknown-linux-musl/release/${{ secrets.RELEASE_NAME }}
+            asset_name: ${{ secrets.RELEASE_NAME }}-linux
+            tag:  ${{ secrets.RELEASE_NAME }}
+            overwrite: true
         
             
 
