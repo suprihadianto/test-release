@@ -38,12 +38,11 @@ jobs:
           run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/build-linux.sh"
           env:
             RELEASE_NAME: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
-        - shell: bash
-          run: |
-            ls
-        - name: Publish release
-          run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/release-linux.sh"
-          env:
-            GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-            RELEASE_NAME: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
+        - name: Upload binary to release
+          uses: svenstaro/upload-release-action@2.3.0
+          with:
+            repo_token: ${{ secrets.GIT_TOKEN }}
+            file: ${{ github.workspace }}
+            asset_name: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
+            tag: ${{ github.ref }}
 
