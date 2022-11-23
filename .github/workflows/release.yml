@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     tags:
-      - test_release-v*.*.*
+      - '*'
     
 jobs:
   release:
@@ -14,13 +14,6 @@ jobs:
 
       - name: Set env
         run: echo "RELEASE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
-      - name: Create a release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: false
-          automatic_release_tag: ${{ env.RELEASE_NAME }}
           
   linux:
       needs: release
@@ -42,7 +35,7 @@ jobs:
           uses: svenstaro/upload-release-action@2.3.0
           with:
             repo_token: ${{ secrets.GIT_TOKEN }}
-            file: ${{ github.workspace }}
+            file: ${{ github.workspace }}/${{ secrets.RELEASE_NAME }}-linux_amd64.zip
             asset_name: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
             tag: ${{ github.ref }}
 
