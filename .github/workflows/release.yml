@@ -2,7 +2,7 @@ name: Rust
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "maina" ]
     tags:
       - test_release-v*.*.*
     
@@ -31,5 +31,5 @@ jobs:
         run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/release-linux.sh"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-          RELEASE_NAME: ${{ secrets.RELEASE_NAME }}
+          RELEASE_NAME: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
 
