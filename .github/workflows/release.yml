@@ -2,7 +2,7 @@ name: Rust
 
 on:
   push:
-    branches: [ "maina" ]
+    branches: [ "main" ]
     tags:
       - test_release-v*.*.*
     
