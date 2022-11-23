@@ -20,4 +20,5 @@ jobs:
           UPLOAD_MODE: none
       - shell: bash
         run: |
-          ls
+          ls output
+
