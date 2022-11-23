@@ -23,7 +23,15 @@ jobs:
         run: |
            pwd
            ls
-      - name: Build binaries
-        run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/build-linux.sh"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Binary
+          path: |
+            ${{ steps.compile.outputs.BUILT_ARCHIVE }}
+            
+      - name: Publish release
+        run: /bin/bash -c "source $GITHUB_WORKSPACE/github-actions/release-linux.sh"
         env:
-          RELEASE_NAME: test_release
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          RELEASE_NAME: ${{ secrets.RELEASE_NAME }}
