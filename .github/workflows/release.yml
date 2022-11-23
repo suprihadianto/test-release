@@ -2,9 +2,9 @@ name: Rust
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "mainan" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "mainan" ]
 
 jobs:
   build:
