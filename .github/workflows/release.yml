@@ -4,19 +4,19 @@ on:
   push:
     branches: [ "main" ]
     tags:
-      - '*'
+      - test_release-v*.*.*
     
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Bump version and push tag/create release point
-      uses: anothrNick/github-tag-action@1.17.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-        WITH_V: true
-      id: bump_version
+      - name: Create a release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          automatic_release_tag: ${{ secrets.RELEASE_NAME }}
           
   linux:
       needs: release
@@ -40,6 +40,6 @@ jobs:
             repo_token: ${{ secrets.GIT_TOKEN }}
             file: ${{ github.workspace }}/${{ secrets.RELEASE_NAME }}-linux_amd64.zip
             asset_name: ${{ secrets.RELEASE_NAME }}-linux_amd64.zip
-            tag: ${{ steps.bump_version.outputs.new_tag }}
+            tag:  ${{ secrets.RELEASE_NAME }}
             overwrite: true
 
