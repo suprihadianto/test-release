@@ -7,6 +7,6 @@ function build() {
 
   
   ls "${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-musl/release"
-  ls "${RELEASE_NAME}"
+  echo "${RELEASE_NAME}"
 }
 build
