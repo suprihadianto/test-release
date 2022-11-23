@@ -1,17 +1,6 @@
 #!/bin/bash
 
 function publish() {
-  local binary
-  binary="${1}"
-
-  if [ ! -e "${binary}" ];
-  then
-      echo 'Invalid binary ('"${binary}"')'
-      return 1
-  fi
-
-  local checksum
-  checksum="$(sha256sum "${binary}" | cut -d ' ' -f 1)"
 
   local base_url
   base_url='https://api.github.com/repos/'"${GITHUB_REPOSITORY}"
