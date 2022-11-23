@@ -7,5 +7,7 @@ function build() {
 
   cp "${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-musl/release/landep" \
     "${GITHUB_WORKSPACE}"'/'"${RELEASE_NAME}"
+    
+  ls ${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-musl/release
 }
 build
