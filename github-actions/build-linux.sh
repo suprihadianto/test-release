@@ -5,11 +5,10 @@ function build() {
 
   mkdir "${GITHUB_WORKSPACE}/bin"
 
-  #cp "${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-musl/release/test_release" \
-  #  "${GITHUB_WORKSPACE}"'/'"${RELEASE_NAME}"
-  
-  cp "${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-musl/release/test_release"
+  cp "${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-musl/release/test_release" \
+    "${GITHUB_WORKSPACE}"'/'"${RELEASE_NAME}"
+
     
-  ls ${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-musl/release
+  ls ${GITHUB_WORKSPACE}
 }
 build
